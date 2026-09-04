@@ -12,3 +12,5 @@ next-env.d.ts
 !.vscode/settings.json
 .idea/
 npm-debug.log*
+
+.vercel
