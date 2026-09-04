@@ -55,6 +55,14 @@ export function Rodape() {
                   </Link>
                 </li>
               ))}
+              <li className="pt-2">
+                <Link
+                  href="/rastreio"
+                  className="font-semibold text-verde-300 transition-colors hover:text-verde-200"
+                >
+                  Acompanhar entrega
+                </Link>
+              </li>
             </ul>
           </nav>
 
