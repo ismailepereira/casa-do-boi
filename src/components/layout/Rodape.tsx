@@ -132,8 +132,13 @@ export function Rodape() {
 
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-xs text-verde-100/50 sm:flex-row sm:items-center sm:justify-between">
+          {/* Razão social e CNPJ em destaque: exigência do Decreto 7.962/2013. */}
           <p>
-            © {new Date().getFullYear()} {LOJA.nome}. Todos os direitos reservados.
+            {LOJA.razaoSocial} — CNPJ {LOJA.cnpj}
+            <br />
+            {LOJA.endereco.rua}, {LOJA.endereco.bairro}, {LOJA.endereco.cidade}/
+            {LOJA.endereco.uf} — CEP {LOJA.endereco.cep}
+            <br />© {new Date().getFullYear()} {LOJA.nome}. Todos os direitos reservados.
           </p>
           <p>
             Desenvolvido por{" "}
