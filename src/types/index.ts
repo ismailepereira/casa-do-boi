@@ -75,9 +75,22 @@ export type OpcaoFrete = {
   simulado: boolean;
 };
 
-export type ResultadoFrete = {
+/**
+ * Um bloco de entrega do pedido. Um mesmo carrinho pode gerar mais de um:
+ * o que vai pelos Correios, o que vai de transportadora e o que só sai na loja.
+ */
+export type GrupoFrete = {
+  chave: ModalidadeEnvio;
+  titulo: string;
+  /** Nomes dos produtos que caem neste grupo. */
+  itens: string[];
   opcoes: OpcaoFrete[];
+  /** Explicação mostrada quando o grupo não tem preço a exibir. */
+  aviso?: string;
+};
+
+export type ResultadoFrete = {
+  grupos: GrupoFrete[];
+  /** true quando algum valor exibido ainda é estimativa. */
   simulado: boolean;
-  /** Itens do pedido que não podem ser postados. */
-  foraDoCorreios: { nome: string; motivo: string }[];
 };

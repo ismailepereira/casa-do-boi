@@ -1,14 +1,60 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Loader2, MapPin, Truck } from "lucide-react";
+import { Loader2, MapPin, MessageCircle, Package, Store, Truck } from "lucide-react";
 import { LOJA } from "@/config/loja";
 import { precoBRL } from "@/lib/formato";
-import type { ResultadoFrete } from "@/types";
+import { linkWhatsApp } from "@/lib/whatsapp";
+import type { GrupoFrete, ResultadoFrete } from "@/types";
+
+const ICONE = { correios: Package, transportadora: Truck, retirada: Store } as const;
 
 function formatarCep(valor: string) {
   const d = valor.replace(/\D/g, "").slice(0, 8);
   return d.length > 5 ? `${d.slice(0, 5)}-${d.slice(5)}` : d;
+}
+
+function Grupo({ grupo, mostrarTitulo }: { grupo: GrupoFrete; mostrarTitulo: boolean }) {
+  const Icone = ICONE[grupo.chave];
+
+  return (
+    <div className="rounded-lg border border-areia-200">
+      {mostrarTitulo && (
+        <p className="flex items-center gap-1.5 border-b border-areia-200 bg-areia-50 px-3 py-2 text-xs font-semibold text-verde-950">
+          <Icone size={14} className="text-verde-500" aria-hidden />
+          {grupo.titulo}
+          <span className="font-normal text-verde-800/55">
+            · {grupo.itens.length} {grupo.itens.length === 1 ? "item" : "itens"}
+          </span>
+        </p>
+      )}
+
+      {grupo.opcoes.length > 0 ? (
+        <ul className="divide-y divide-areia-200">
+          {grupo.opcoes.map((o) => (
+            <li key={o.id} className="flex items-center justify-between gap-3 px-3 py-2.5">
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-verde-950">
+                  {o.transportadora} {grupo.chave === "correios" ? o.servico : ""}
+                </p>
+                <p className="text-xs text-verde-800/60">
+                  {grupo.chave === "transportadora" && `${o.servico} · `}
+                  Chega em até {o.prazoDias} dias úteis
+                </p>
+              </div>
+              <span className="shrink-0 font-titulo text-xl text-verde-800">
+                {precoBRL(o.precoBRL)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="px-3 py-2.5 text-xs leading-relaxed text-verde-800/70">
+          {grupo.aviso}
+        </p>
+      )}
+    </div>
+  );
 }
 
 export function CalculadoraFrete({
@@ -49,6 +95,8 @@ export function CalculadoraFrete({
       setCarregando(false);
     }
   }
+
+  const semPreco = resultado?.grupos.every((g) => g.opcoes.length === 0) ?? false;
 
   return (
     <div className="border-t border-areia-200 pt-4">
@@ -95,46 +143,40 @@ export function CalculadoraFrete({
       )}
 
       {resultado && (
-        <div className="mt-3" aria-live="polite">
-          {resultado.opcoes.length > 0 && (
-            <ul className="divide-y divide-areia-200 rounded-lg border border-areia-200">
-              {resultado.opcoes.map((o) => (
-                <li key={o.id} className="flex items-center justify-between gap-3 px-3 py-2.5">
-                  <div>
-                    <p className="text-sm font-semibold text-verde-950">
-                      {o.transportadora} {o.servico}
-                    </p>
-                    <p className="text-xs text-verde-800/60">
-                      Chega em até {o.prazoDias} dias úteis
-                    </p>
-                  </div>
-                  <span className="font-titulo text-xl text-verde-800">
-                    {precoBRL(o.precoBRL)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
+        <div className="mt-3 space-y-2" aria-live="polite">
+          {resultado.grupos.map((g) => (
+            <Grupo key={g.chave} grupo={g} mostrarTitulo={resultado.grupos.length > 1} />
+          ))}
 
-          {resultado.simulado && (
-            <p className="mt-2 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-900">
-              <strong>Valor simulado.</strong> A integração com a transportadora ainda não
-              está ligada — este número serve só para testar a tela.
+          {resultado.grupos.length > 1 && (
+            <p className="text-xs text-verde-800/60">
+              O pedido sai em entregas separadas porque os itens seguem por caminhos
+              diferentes.
             </p>
           )}
 
-          {resultado.foraDoCorreios.length > 0 && (
-            <div className="mt-2 rounded-lg bg-verde-50 px-3 py-2.5 text-xs text-verde-800">
-              <p className="font-semibold">Este item não vai pelos Correios</p>
-              {resultado.foraDoCorreios.map((f) => (
-                <p key={f.nome} className="mt-1 text-verde-800/75">
-                  {f.motivo} — combine a entrega pelo WhatsApp.
-                </p>
-              ))}
-            </div>
+          {resultado.simulado && (
+            <p className="rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-900">
+              <strong>Valor simulado.</strong> A tabela de frete ainda não foi confirmada
+              com a transportadora — este número serve só para testar a tela.
+            </p>
           )}
 
-          <p className="mt-2 flex items-start gap-1.5 text-xs text-verde-800/55">
+          {semPreco && (
+            <a
+              href={linkWhatsApp(
+                `Olá! Quero um orçamento de frete para o CEP ${cep} na ${LOJA.nome}.`,
+              )}
+              target="_blank"
+              rel="noopener"
+              className="flex h-10 items-center justify-center gap-2 rounded-lg bg-[#1faf53] text-sm font-semibold text-white transition-colors hover:bg-[#189544]"
+            >
+              <MessageCircle size={15} aria-hidden />
+              Pedir orçamento no WhatsApp
+            </a>
+          )}
+
+          <p className="flex items-start gap-1.5 text-xs text-verde-800/55">
             <MapPin size={13} className="mt-0.5 shrink-0" aria-hidden />
             Enviado de {LOJA.endereco.cidade}/{LOJA.endereco.uf}. Retirada na loja sem custo.
           </p>

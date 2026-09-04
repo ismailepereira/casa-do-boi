@@ -1,7 +1,7 @@
 import "server-only";
 
 import { pesoTaxavel } from "@/lib/frete";
-import type { OpcaoFrete, Produto, ResultadoFrete } from "@/types";
+import type { ItemCarrinho, OpcaoFrete } from "@/types";
 
 /**
  * Cliente da API do Melhor Envio.
@@ -22,10 +22,8 @@ export function integracaoConfigurada(): boolean {
   return TOKEN.length > 0;
 }
 
-type ItemCotacao = { produto: Produto; quantidade: number };
-
 /** Monta o corpo que o Melhor Envio espera em /api/v2/me/shipment/calculate. */
-function corpoCotacao(cepDestino: string, itens: ItemCotacao[]) {
+function corpoCotacao(cepDestino: string, itens: ItemCarrinho[]) {
   return {
     from: { postal_code: CEP_ORIGEM },
     to: { postal_code: cepDestino },
@@ -45,7 +43,7 @@ function corpoCotacao(cepDestino: string, itens: ItemCotacao[]) {
  * Estimativa usada enquanto não há token. Não é tabela dos Correios — é uma
  * regra grosseira só para a tela ter o que mostrar durante o desenvolvimento.
  */
-function cotacaoSimulada(cepDestino: string, itens: ItemCotacao[]): OpcaoFrete[] {
+function cotacaoSimulada(cepDestino: string, itens: ItemCarrinho[]): OpcaoFrete[] {
   const peso = itens.reduce(
     (soma, { produto, quantidade }) => soma + pesoTaxavel(produto.logistica) * quantidade,
     0,
@@ -87,31 +85,16 @@ type RespostaMelhorEnvio = {
   error?: string;
 };
 
-/** Cota o frete dos itens postáveis. Itens de transportadora ficam de fora. */
-export async function cotarFrete(
+/** Cota pelos Correios os itens já filtrados como postáveis. */
+export async function cotarCorreios(
   cepDestinoBruto: string,
-  itens: ItemCotacao[],
-): Promise<ResultadoFrete> {
+  itens: ItemCarrinho[],
+): Promise<{ opcoes: OpcaoFrete[]; simulado: boolean }> {
   const cepDestino = cepDestinoBruto.replace(/\D/g, "");
-
-  const postaveis = itens.filter((i) => i.produto.logistica.modalidade === "correios");
-  const foraDoCorreios = itens
-    .filter((i) => i.produto.logistica.modalidade !== "correios")
-    .map((i) => ({
-      nome: i.produto.nome,
-      motivo:
-        i.produto.logistica.observacao ??
-        (i.produto.logistica.modalidade === "retirada"
-          ? "Somente retirada na loja"
-          : "Entrega por transportadora"),
-    }));
-
-  if (postaveis.length === 0) {
-    return { opcoes: [], simulado: false, foraDoCorreios };
-  }
+  if (itens.length === 0) return { opcoes: [], simulado: false };
 
   if (!integracaoConfigurada()) {
-    return { opcoes: cotacaoSimulada(cepDestino, postaveis), simulado: true, foraDoCorreios };
+    return { opcoes: cotacaoSimulada(cepDestino, itens), simulado: true };
   }
 
   const resposta = await fetch(`${URL_BASE}/api/v2/me/shipment/calculate`, {
@@ -122,7 +105,7 @@ export async function cotarFrete(
       Authorization: `Bearer ${TOKEN}`,
       "User-Agent": "Casa do Boi FOS (contato@casadoboi.com.br)",
     },
-    body: JSON.stringify(corpoCotacao(cepDestino, postaveis)),
+    body: JSON.stringify(corpoCotacao(cepDestino, itens)),
     cache: "no-store",
   });
 
@@ -144,5 +127,5 @@ export async function cotarFrete(
     }))
     .sort((a, b) => a.precoBRL - b.precoBRL);
 
-  return { opcoes, simulado: false, foraDoCorreios };
+  return { opcoes, simulado: false };
 }

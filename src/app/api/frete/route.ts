@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { produtoPorSlug } from "@/data/produtos";
-import { cotarFrete } from "@/services/melhorEnvio";
+import { cotarPedido } from "@/services/cotacao";
 
 /**
  * Cotação de frete. O token do Melhor Envio nunca sai daqui — quem tem o token
@@ -49,7 +49,7 @@ export async function POST(requisicao: Request) {
   }
 
   try {
-    return NextResponse.json(await cotarFrete(cep, itens));
+    return NextResponse.json(await cotarPedido(cep, itens));
   } catch (erro) {
     console.error("Falha ao cotar frete:", erro);
     return NextResponse.json(
