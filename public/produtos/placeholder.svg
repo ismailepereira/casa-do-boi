@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500" role="img" aria-label="Foto do produto em breve">
+  <rect width="500" height="500" fill="#f2f7f3"/>
+  <g fill="none" stroke="#004020" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.28">
+    <path d="M250 148 L358 200 358 316 250 368 142 316 142 200 Z"/>
+    <path d="M142 200 L250 252 358 200"/>
+    <path d="M250 252 L250 368"/>
+    <path d="M196 174 L304 226"/>
+  </g>
+  <text x="250" y="416" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="600" fill="#004020" opacity="0.5">Foto em breve</text>
+</svg>

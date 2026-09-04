@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────────────────────────────
+   Design tokens da Casa do Boi FOS.
+   As cores vieram direto do logo (amostradas do PNG).
+   ────────────────────────────────────────────────────────────────────── */
+@theme {
+  --color-verde-950: #002415;
+  --color-verde-900: #00301a;
+  --color-verde-800: #004020;
+  --color-verde-700: #00552a;
+  --color-verde-600: #007a2c;
+  --color-verde-500: #00a010;
+  --color-verde-400: #1fbf08;
+  --color-verde-300: #4fd63a;
+  --color-verde-200: #a3eca0;
+  --color-verde-100: #d9f7d6;
+  --color-verde-50: #f2fbf1;
+
+  --color-areia-50: #faf9f5;
+  --color-areia-100: #f2efe6;
+  --color-areia-200: #e5e0d1;
+
+  --color-oferta: #e0521b;
+  --color-oferta-claro: #fff1e9;
+
+  --font-titulo: var(--fonte-titulo), "Arial Narrow", system-ui, sans-serif;
+  --font-corpo: var(--fonte-corpo), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --shadow-card: 0 1px 2px rgb(0 48 26 / 0.06), 0 8px 24px -12px rgb(0 48 26 / 0.18);
+  --shadow-card-hover: 0 2px 4px rgb(0 48 26 / 0.08), 0 18px 40px -16px rgb(0 48 26 / 0.28);
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-areia-50);
+  color: var(--color-verde-950);
+  font-family: var(--font-corpo);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Base fica em @layer para que utilitários (font-corpo, normal-case) vençam. */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-titulo);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 0.98;
+  }
+}
+
+/* Faixa listrada usada no hero e nas divisórias de seção. */
+.textura-campo {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.05) 0px,
+    rgb(255 255 255 / 0.05) 2px,
+    transparent 2px,
+    transparent 12px
+  );
+}
+
+/* Esconde a barra de rolagem em carrosséis horizontais. */
+.sem-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.sem-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
