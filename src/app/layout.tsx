@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Barlow_Condensed, Inter } from "next/font/google";
 import { DrawerCarrinho } from "@/components/carrinho/DrawerCarrinho";
+import { AvisoDemonstracao } from "@/components/layout/AvisoDemonstracao";
 import { Cabecalho } from "@/components/layout/Cabecalho";
 import { Rodape } from "@/components/layout/Rodape";
 import { LOJA } from "@/config/loja";
@@ -32,6 +33,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
   },
+  // Enquanto for demonstração, fora dos buscadores: preço ilustrativo indexado
+  // sob a marca do cliente seria confundido com oferta real.
+  robots: LOJA.demonstracao ? { index: false, follow: false } : undefined,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -44,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Pular para o conteúdo
         </a>
+        <AvisoDemonstracao />
         <Cabecalho />
         <main id="conteudo">{children}</main>
         <Rodape />

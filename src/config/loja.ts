@@ -3,6 +3,12 @@
  * TODO(cliente): confirmar telefone, endereço, horário e CNPJ reais.
  */
 export const LOJA = {
+  /**
+   * Versão demonstrativa: exibe a faixa de aviso e bloqueia a indexação em
+   * buscadores. Vira `false` com NEXT_PUBLIC_DEMO=false quando a loja for real.
+   */
+  demonstracao: process.env.NEXT_PUBLIC_DEMO !== "false",
+
   nome: "Casa do Boi FOS",
   slogan: "Tudo para o seu campo, do curral à roça",
   descricao:

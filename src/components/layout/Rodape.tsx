@@ -116,6 +116,20 @@ export function Rodape() {
         </div>
       </div>
 
+      {LOJA.demonstracao && (
+        <div className="border-t border-white/10 bg-verde-950">
+          <p className="mx-auto max-w-7xl px-4 py-4 text-xs leading-relaxed text-amber-300/80">
+            <strong className="font-semibold text-amber-300">
+              Versão demonstrativa, sem validade comercial.
+            </strong>{" "}
+            Este site é uma demonstração técnica. Produtos, preços, prazos, formas de
+            pagamento e dados de contato são ilustrativos, não constituem oferta e não
+            vinculam a {LOJA.nome}. Nenhuma compra realizada aqui gera pedido. A
+            publicação é temporária e pode ser retirada do ar a qualquer momento.
+          </p>
+        </div>
+      )}
+
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-xs text-verde-100/50 sm:flex-row sm:items-center sm:justify-between">
           <p>

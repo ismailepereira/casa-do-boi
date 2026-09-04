@@ -1,5 +1,15 @@
 # Casa do Boi FOS — E-commerce
 
+> ## ⚠️ Versão demonstrativa
+>
+> Este repositório contém uma **demonstração técnica**, sem validade comercial.
+> Produtos, preços, prazos, formas de pagamento e dados de contato são **ilustrativos**,
+> não constituem oferta e não vinculam a Casa do Boi FOS. Nenhuma compra feita no site
+> gera pedido. A publicação é **temporária** e pode ser retirada do ar a qualquer momento.
+>
+> Para desligar o modo demonstração (faixa de aviso, nota do rodapé e `noindex`):
+> defina `NEXT_PUBLIC_DEMO=false` no ambiente.
+
 Loja online da agropecuária **Casa do Boi FOS**: máquinas e ferramentas STIHL, suplemento
 mineral e ração, linha veterinária, cerca e insumos, vestuário e selaria.
 
