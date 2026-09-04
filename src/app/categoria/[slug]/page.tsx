@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ChevronRight } from "lucide-react";
 import { CardProduto } from "@/components/produto/CardProduto";
 import { CATEGORIAS, categoriaPorSlug } from "@/data/categorias";
-import { produtosPorCategoria } from "@/data/produtos";
+import { produtosPorCategoria } from "@/services/catalogo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -24,7 +24,7 @@ export default async function PaginaCategoria({ params }: Props) {
   const categoria = categoriaPorSlug(slug);
   if (!categoria) notFound();
 
-  const produtos = produtosPorCategoria(slug);
+  const produtos = await produtosPorCategoria(slug);
 
   return (
     <>

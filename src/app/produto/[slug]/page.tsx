@@ -7,7 +7,8 @@ import { CompraProduto } from "@/components/produto/CompraProduto";
 import { GaleriaProduto } from "@/components/produto/GaleriaProduto";
 import { LOJA } from "@/config/loja";
 import { categoriaPorSlug } from "@/data/categorias";
-import { PRODUTOS, produtoPorSlug, produtosPorCategoria } from "@/data/produtos";
+import { PRODUTOS } from "@/data/produtos";
+import { produtoPorSlug, produtosPorCategoria } from "@/services/catalogo";
 import { pesoTaxavel } from "@/lib/frete";
 import { numeroBR } from "@/lib/formato";
 
@@ -19,7 +20,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const produto = produtoPorSlug(slug);
+  const produto = await produtoPorSlug(slug);
   if (!produto) return {};
   return {
     title: produto.nome,
@@ -36,11 +37,11 @@ const ENTREGA = {
 
 export default async function PaginaProduto({ params }: Props) {
   const { slug } = await params;
-  const produto = produtoPorSlug(slug);
+  const produto = await produtoPorSlug(slug);
   if (!produto) notFound();
 
   const categoria = categoriaPorSlug(produto.categoria);
-  const relacionados = produtosPorCategoria(produto.categoria)
+  const relacionados = (await produtosPorCategoria(produto.categoria))
     .filter((p) => p.slug !== produto.slug)
     .slice(0, 4);
 

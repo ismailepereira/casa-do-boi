@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SearchX } from "lucide-react";
 import { CardProduto } from "@/components/produto/CardProduto";
 import { CATEGORIAS } from "@/data/categorias";
-import { buscarProdutos } from "@/data/produtos";
+import { buscarProdutos } from "@/services/catalogo";
 
 export const metadata: Metadata = { title: "Busca" };
 
@@ -11,7 +11,7 @@ type Props = { searchParams: Promise<{ q?: string }> };
 
 export default async function PaginaBusca({ searchParams }: Props) {
   const { q = "" } = await searchParams;
-  const resultados = buscarProdutos(q);
+  const resultados = await buscarProdutos(q);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10">

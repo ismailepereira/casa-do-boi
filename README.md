@@ -71,6 +71,48 @@ public/
 └── produtos/             Fotos (6 STIHL reais + placeholder)
 ```
 
+## Catálogo pelo Bling (ERP)
+
+O site lê o catálogo do Bling quando há credenciais; sem elas, usa o catálogo local
+de demonstração em `src/data/produtos.ts`. Nenhuma página sabe qual dos dois está
+valendo — quem decide é `src/services/catalogo.ts`.
+
+Com o Bling ligado, o mesmo cadastro abastece o site, o Mercado Livre e os demais
+marketplaces, emite a nota fiscal e gera a etiqueta.
+
+**Como obter as credenciais**
+
+1. No Bling: *Central de Extensões > Área do Integrador > Criar aplicativo*
+2. Marque os escopos de **Produtos** e **Pedidos de venda**
+3. Copie o `Client ID` e o `Client Secret` da aba "Informações do app"
+4. Autorize o app para gerar o `refresh_token` (vale **30 dias** — renove antes de expirar)
+5. Preencha no `.env.local`:
+
+```
+BLING_CLIENT_ID=
+BLING_CLIENT_SECRET=
+BLING_REFRESH_TOKEN=
+```
+
+**Conferir a conexão antes de mexer no site**
+
+```bash
+npm run bling:teste
+```
+
+Mostra se o token está válido, lista os produtos, aponta quais estão **sem peso ou
+dimensão** (esses caem em orçamento, porque não dá para cotar frete) e imprime os nomes
+das categorias — que devem ser cadastrados no `DE_PARA_CATEGORIA` de
+`src/services/catalogo.ts`.
+
+**Diagnóstico em produção**
+
+`GET /api/catalogo` responde de onde veio o catálogo (`bling` ou `local`), quantos
+produtos e como estão divididos por modalidade de envio.
+
+Se o Bling ficar fora do ar, o site cai automaticamente no catálogo local em vez de
+quebrar.
+
 ## Pendências antes de ir ao ar
 
 - [ ] Confirmar telefone, endereço, horário e CNPJ em `src/config/loja.ts`

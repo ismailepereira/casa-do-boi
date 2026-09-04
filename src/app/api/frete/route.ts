@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { produtoPorSlug } from "@/data/produtos";
+import { produtoPorSlug } from "@/services/catalogo";
 import { cotarPedido } from "@/services/cotacao";
 
 /**
@@ -35,7 +35,7 @@ export async function POST(requisicao: Request) {
 
   const itens = [];
   for (const pedido of pedidos) {
-    const produto = produtoPorSlug(pedido.slug ?? "");
+    const produto = await produtoPorSlug(pedido.slug ?? "");
     if (!produto) {
       return NextResponse.json(
         { erro: `Produto não encontrado: ${pedido.slug}` },
