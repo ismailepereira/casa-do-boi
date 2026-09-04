@@ -33,6 +33,13 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Combustível", valor: "Mistura 2 tempos 1:50" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 6.5,
+      comprimentoCm: 46,
+      larguraCm: 30,
+      alturaCm: 27,
+      modalidade: "correios",
+    },
     emEstoque: true,
     destaque: true,
   },
@@ -52,6 +59,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Acessório", valor: "Faca 3 pontas + carretel" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 9.5,
+      comprimentoCm: 180,
+      larguraCm: 30,
+      alturaCm: 25,
+      modalidade: "transportadora",
+      observacao:
+        "Caixa de 180 cm: excede o lado máximo de 100 cm dos Correios.",
+    },
     emEstoque: true,
     destaque: true,
   },
@@ -72,6 +88,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Tensão", valor: "127 V" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 11.5,
+      comprimentoCm: 40,
+      larguraCm: 35,
+      alturaCm: 85,
+      modalidade: "correios",
+      observacao:
+        "Lado de 85 cm: paga taxa de grande formato (acima de 70 cm).",
+    },
     emEstoque: true,
     destaque: true,
   },
@@ -90,6 +115,13 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Peso", valor: "2,4 kg sem bateria" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 3.5,
+      comprimentoCm: 55,
+      larguraCm: 28,
+      alturaCm: 30,
+      modalidade: "correios",
+    },
     emEstoque: true,
   },
   {
@@ -107,6 +139,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Rendimento", valor: "25 litros de mistura" },
     ],
     unidade: "frasco",
+    logistica: {
+      pesoKg: 0.6,
+      comprimentoCm: 20,
+      larguraCm: 10,
+      alturaCm: 8,
+      modalidade: "correios",
+      observacao:
+        "Líquido: exigir embalagem com absorvente e lacre.",
+    },
     emEstoque: true,
     destaque: true,
   },
@@ -124,6 +165,13 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Graduação", valor: "1:50 e 1:25" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 0.25,
+      comprimentoCm: 28,
+      larguraCm: 12,
+      alturaCm: 10,
+      modalidade: "correios",
+    },
     emEstoque: true,
   },
   {
@@ -140,6 +188,13 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Elos", valor: "55" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 0.75,
+      comprimentoCm: 20,
+      larguraCm: 15,
+      alturaCm: 5,
+      modalidade: "correios",
+    },
     emEstoque: true,
   },
   {
@@ -157,6 +212,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Bicos", valor: "Leque e cone" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 5.0,
+      comprimentoCm: 60,
+      larguraCm: 45,
+      alturaCm: 25,
+      modalidade: "correios",
+      observacao:
+        "Peso cubado (11,3 kg) manda no frete, não o peso real.",
+    },
     emEstoque: true,
   },
 
@@ -178,6 +242,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Embalagem", valor: "Saco de 30 kg" },
     ],
     unidade: "saco 30 kg",
+    logistica: {
+      pesoKg: 30.5,
+      comprimentoCm: 60,
+      larguraCm: 40,
+      alturaCm: 18,
+      modalidade: "transportadora",
+      observacao:
+        "Saco de 30 kg estoura o limite de peso dos Correios.",
+    },
     emEstoque: true,
     destaque: true,
   },
@@ -196,6 +269,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Embalagem", valor: "Saco de 30 kg" },
     ],
     unidade: "saco 30 kg",
+    logistica: {
+      pesoKg: 30.5,
+      comprimentoCm: 60,
+      larguraCm: 40,
+      alturaCm: 18,
+      modalidade: "transportadora",
+      observacao:
+        "Saco de 30 kg estoura o limite de peso dos Correios.",
+    },
     emEstoque: true,
     destaque: true,
   },
@@ -214,6 +296,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Embalagem", valor: "Saco de 25 kg" },
     ],
     unidade: "saco 25 kg",
+    logistica: {
+      pesoKg: 25.5,
+      comprimentoCm: 60,
+      larguraCm: 40,
+      alturaCm: 15,
+      modalidade: "transportadora",
+      observacao:
+        "Cabe no limite, mas o frete pelos Correios inviabiliza o preço.",
+    },
     emEstoque: true,
   },
   {
@@ -231,6 +322,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Embalagem", valor: "Saco de 40 kg" },
     ],
     unidade: "saco 40 kg",
+    logistica: {
+      pesoKg: 40.5,
+      comprimentoCm: 70,
+      larguraCm: 45,
+      alturaCm: 20,
+      modalidade: "transportadora",
+      observacao:
+        "40 kg: acima do limite de 30 kg.",
+    },
     emEstoque: true,
   },
   {
@@ -247,6 +347,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Embalagem", valor: "Saco de 25 kg" },
     ],
     unidade: "saco 25 kg",
+    logistica: {
+      pesoKg: 25.5,
+      comprimentoCm: 55,
+      larguraCm: 38,
+      alturaCm: 15,
+      modalidade: "transportadora",
+      observacao:
+        "Cabe no limite, mas o frete pelos Correios inviabiliza o preço.",
+    },
     emEstoque: true,
   },
   {
@@ -263,6 +372,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Material", valor: "Polietileno com proteção UV" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 45.0,
+      comprimentoCm: 200,
+      larguraCm: 120,
+      alturaCm: 90,
+      modalidade: "transportadora",
+      observacao:
+        "Volume grande: só transportadora ou entrega própria.",
+    },
     emEstoque: true,
     somenteOrcamento: true,
   },
@@ -285,6 +403,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Carência", valor: "Consultar bula" },
     ],
     unidade: "frasco",
+    logistica: {
+      pesoKg: 0.7,
+      comprimentoCm: 22,
+      larguraCm: 10,
+      alturaCm: 10,
+      modalidade: "correios",
+      observacao:
+        "Medicamento veterinário: confirmar aceitação e declarar conteúdo.",
+    },
     emEstoque: true,
     destaque: true,
   },
@@ -302,6 +429,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Volume", valor: "1 litro" },
     ],
     unidade: "frasco",
+    logistica: {
+      pesoKg: 1.25,
+      comprimentoCm: 26,
+      larguraCm: 12,
+      alturaCm: 12,
+      modalidade: "correios",
+      observacao:
+        "Medicamento veterinário: confirmar aceitação e declarar conteúdo.",
+    },
     emEstoque: true,
   },
   {
@@ -319,6 +455,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Entrega", valor: "Somente retirada na loja" },
     ],
     unidade: "frasco",
+    logistica: {
+      pesoKg: 1.5,
+      comprimentoCm: 25,
+      larguraCm: 20,
+      alturaCm: 20,
+      modalidade: "retirada",
+      observacao:
+        "Cadeia fria de 2 °C a 8 °C: não pode ser postada.",
+    },
     emEstoque: true,
     somenteOrcamento: true,
   },
@@ -336,6 +481,13 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Dosagem", valor: "Regulável" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 0.55,
+      comprimentoCm: 32,
+      larguraCm: 12,
+      alturaCm: 8,
+      modalidade: "correios",
+    },
     emEstoque: true,
   },
   {
@@ -352,6 +504,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Volume", valor: "500 ml" },
     ],
     unidade: "frasco",
+    logistica: {
+      pesoKg: 0.7,
+      comprimentoCm: 22,
+      larguraCm: 10,
+      alturaCm: 10,
+      modalidade: "correios",
+      observacao:
+        "Medicamento veterinário: confirmar aceitação e declarar conteúdo.",
+    },
     emEstoque: false,
   },
 
@@ -372,6 +533,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Acabamento", valor: "Galvanizado" },
     ],
     unidade: "rolo",
+    logistica: {
+      pesoKg: 45.0,
+      comprimentoCm: 45,
+      larguraCm: 45,
+      alturaCm: 20,
+      modalidade: "transportadora",
+      observacao:
+        "Rolo de 45 kg: acima do limite de 30 kg.",
+    },
     emEstoque: true,
     destaque: true,
   },
@@ -388,6 +558,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Acabamento", valor: "Galvanizado" },
     ],
     unidade: "rolo",
+    logistica: {
+      pesoKg: 32.0,
+      comprimentoCm: 40,
+      larguraCm: 40,
+      alturaCm: 20,
+      modalidade: "transportadora",
+      observacao:
+        "Rolo de 32 kg: acima do limite de 30 kg.",
+    },
     emEstoque: true,
   },
   {
@@ -404,6 +583,13 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Alimentação", valor: "Bivolt + bateria" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 2.6,
+      comprimentoCm: 30,
+      larguraCm: 25,
+      alturaCm: 15,
+      modalidade: "correios",
+    },
     emEstoque: true,
   },
   {
@@ -420,6 +606,13 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Embalagem", valor: "10 kg" },
     ],
     unidade: "saco 10 kg",
+    logistica: {
+      pesoKg: 10.3,
+      comprimentoCm: 45,
+      larguraCm: 30,
+      alturaCm: 12,
+      modalidade: "correios",
+    },
     emEstoque: true,
     destaque: true,
   },
@@ -436,6 +629,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Embalagem", valor: "Saco de 50 kg" },
     ],
     unidade: "saco 50 kg",
+    logistica: {
+      pesoKg: 50.5,
+      comprimentoCm: 70,
+      larguraCm: 45,
+      alturaCm: 22,
+      modalidade: "transportadora",
+      observacao:
+        "50 kg: acima do limite de 30 kg.",
+    },
     emEstoque: true,
     somenteOrcamento: true,
   },
@@ -455,6 +657,13 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Numeração", valor: "37 ao 44" },
     ],
     unidade: "par",
+    logistica: {
+      pesoKg: 1.6,
+      comprimentoCm: 35,
+      larguraCm: 25,
+      alturaCm: 15,
+      modalidade: "correios",
+    },
     emEstoque: true,
     destaque: true,
   },
@@ -472,6 +681,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Numeração", valor: "54 ao 60" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 0.45,
+      comprimentoCm: 40,
+      larguraCm: 40,
+      alturaCm: 20,
+      modalidade: "correios",
+      observacao:
+        "Leve e volumoso: o frete sai pelo peso cubado (5,3 kg).",
+    },
     emEstoque: true,
   },
   {
@@ -488,6 +706,15 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Assento", valor: "17 polegadas" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 12.0,
+      comprimentoCm: 65,
+      larguraCm: 50,
+      alturaCm: 40,
+      modalidade: "transportadora",
+      observacao:
+        "Cabe no limite, mas a cubagem de 21,7 kg torna o Correios caro demais.",
+    },
     emEstoque: true,
     somenteOrcamento: true,
   },
@@ -504,6 +731,13 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Material", valor: "Nylon com argolas de latão" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 0.4,
+      comprimentoCm: 25,
+      larguraCm: 20,
+      alturaCm: 10,
+      modalidade: "correios",
+    },
     emEstoque: true,
   },
   {
@@ -520,6 +754,13 @@ export const PRODUTOS: Produto[] = [
       { rotulo: "Tamanhos", valor: "P ao GG" },
     ],
     unidade: "unidade",
+    logistica: {
+      pesoKg: 0.35,
+      comprimentoCm: 30,
+      larguraCm: 25,
+      alturaCm: 5,
+      modalidade: "correios",
+    },
     emEstoque: true,
   },
 ];

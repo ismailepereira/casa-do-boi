@@ -9,6 +9,33 @@ export type Categoria = {
   destaque?: boolean;
 };
 
+/** Como o item chega ao cliente. Define se entra na cotação de frete dos Correios. */
+export type ModalidadeEnvio =
+  /** Cabe nos limites dos Correios (30 kg, lado ≤ 100 cm, soma ≤ 200 cm). */
+  | "correios"
+  /** Excede os Correios ou o frete fica inviável: transportadora/entrega própria. */
+  | "transportadora"
+  /** Só retirada na loja (cadeia fria, produto controlado). */
+  | "retirada";
+
+/**
+ * Dados de logística do produto — **do produto embalado, pronto para postar**.
+ *
+ * ATENÇÃO: os valores atuais são ESTIMATIVAS. Cada item precisa ser pesado na
+ * balança e medido com a caixa fechada antes de virar cotação de frete real:
+ * peso a menos = frete cobrado abaixo do custo em toda venda.
+ */
+export type Logistica = {
+  /** Peso bruto em kg, com embalagem. */
+  pesoKg: number;
+  comprimentoCm: number;
+  larguraCm: number;
+  alturaCm: number;
+  modalidade: ModalidadeEnvio;
+  /** Motivo da modalidade ou restrição a observar na postagem. */
+  observacao?: string;
+};
+
 export type Produto = {
   slug: string;
   nome: string;
@@ -24,6 +51,7 @@ export type Produto = {
   /** Unidade de venda exibida no card: un, saco 30kg, litro… */
   unidade: string;
   emEstoque: boolean;
+  logistica: Logistica;
   destaque?: boolean;
   /** Produto pesado/volumoso: venda só por orçamento no WhatsApp. */
   somenteOrcamento?: boolean;
