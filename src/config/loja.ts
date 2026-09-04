@@ -15,17 +15,25 @@ export const LOJA = {
     "Agropecuária completa: máquinas e ferramentas STIHL, suplemento mineral, ração, linha veterinária, cerca, insumos, vestuário e selaria.",
 
   // Só dígitos, com DDI. Sobrescrito por NEXT_PUBLIC_WHATSAPP.
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP ?? "5569000000000",
-  whatsappExibicao: "(69) 90000-0000",
-  telefone: "(69) 90000-0000",
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP ?? "5591000000000",
+  whatsappExibicao: "(91) 90000-0000",
+  telefone: "(91) 90000-0000",
   email: "contato@casadoboi.com.br",
 
   endereco: {
-    rua: "Av. Principal, 0000",
+    // TODO(cliente): confirmar rua e número. 68365-000 é o CEP geral de Anapu.
+    rua: "Av. Getúlio Vargas, 000",
     bairro: "Centro",
-    cidade: "Ji-Paraná",
-    uf: "RO",
-    cep: "00000-000",
+    cidade: "Anapu",
+    uf: "PA",
+    cep: "68365-000",
+  },
+
+  /** Onde a loja posta. Vira o `from.postal_code` da cotação de frete. */
+  origemEnvio: {
+    cep: "68365-000",
+    agenciaCorreios: "AC Anapu — Av. Getúlio Vargas, 74, Centro",
+    pontoTransportadora: "Viopex — Av. Getúlio Vargas, 27, Centro",
   },
 
   horario: [

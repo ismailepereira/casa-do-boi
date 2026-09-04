@@ -17,3 +17,11 @@ export function parcelamento(valor: number, parcelasMax: number) {
 export function descontoPercentual(precoDe: number, preco: number): number {
   return Math.round(((precoDe - preco) / precoDe) * 100);
 }
+
+/** Número no padrão brasileiro: 6,5 em vez de 6.5. */
+export function numeroBR(valor: number, casas = 2): string {
+  return valor.toLocaleString("pt-BR", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: casas,
+  });
+}

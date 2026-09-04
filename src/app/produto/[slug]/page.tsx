@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRight, PackageCheck, ShieldCheck, Truck } from "lucide-react";
-import { CompraProduto } from "@/components/produto/CompraProduto";
+import { ChevronRight, Truck } from "lucide-react";
 import { Vitrine } from "@/components/home/Vitrine";
+import { CompraProduto } from "@/components/produto/CompraProduto";
+import { GaleriaProduto } from "@/components/produto/GaleriaProduto";
+import { LOJA } from "@/config/loja";
 import { categoriaPorSlug } from "@/data/categorias";
 import { PRODUTOS, produtoPorSlug, produtosPorCategoria } from "@/data/produtos";
+import { pesoTaxavel } from "@/lib/frete";
+import { numeroBR } from "@/lib/formato";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -25,6 +28,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+const ENTREGA = {
+  correios: "Enviamos pelos Correios para todo o Brasil",
+  transportadora: "Entrega por transportadora — combinada por orçamento",
+  retirada: "Somente retirada na loja",
+} as const;
+
 export default async function PaginaProduto({ params }: Props) {
   const { slug } = await params;
   const produto = produtoPorSlug(slug);
@@ -35,9 +44,27 @@ export default async function PaginaProduto({ params }: Props) {
     .filter((p) => p.slug !== produto.slug)
     .slice(0, 4);
 
+  const imagens = [produto.imagem, ...(produto.imagens ?? [])];
+  const log = produto.logistica;
+
+  /** Ficha técnica: o que o produto declara + o que a logística já sabe. */
+  const ficha = [
+    { rotulo: "Marca", valor: produto.marca },
+    { rotulo: "Departamento", valor: categoria?.nome ?? "—" },
+    ...produto.especificacoes,
+    { rotulo: "Unidade de venda", valor: produto.unidade },
+    { rotulo: "Peso do produto embalado", valor: `${numeroBR(log.pesoKg)} kg` },
+    {
+      rotulo: "Dimensões da embalagem",
+      valor: `${numeroBR(log.comprimentoCm, 0)} × ${numeroBR(log.larguraCm, 0)} × ${numeroBR(log.alturaCm, 0)} cm`,
+    },
+    { rotulo: "Peso considerado no frete", valor: `${numeroBR(pesoTaxavel(log))} kg` },
+    { rotulo: "Código do produto", valor: produto.slug },
+  ];
+
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 py-6">
+      <div className="mx-auto max-w-7xl px-4 py-5">
         <nav
           aria-label="Você está aqui"
           className="flex flex-wrap items-center gap-1 text-xs text-verde-800/50"
@@ -58,68 +85,99 @@ export default async function PaginaProduto({ params }: Props) {
         </nav>
       </div>
 
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 pb-12 lg:grid-cols-[1.15fr_1fr]">
-        <div>
-          <div className="relative aspect-square overflow-hidden rounded-2xl border border-verde-800/8 bg-white">
-            <Image
-              src={produto.imagem}
-              alt={produto.nome}
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 55vw"
-              className="object-contain p-10"
-            />
-          </div>
-
-          <div className="mt-6 rounded-2xl border border-verde-800/8 bg-white p-6">
-            <h2 className="text-xl text-verde-900">Descrição</h2>
-            <p className="mt-3 text-sm leading-relaxed text-verde-800/75">
-              {produto.descricao}
+      {/* Bloco principal: galeria + caixa de compra */}
+      <div className="mx-auto max-w-7xl px-4 pb-10">
+        <div className="grid gap-8 lg:grid-cols-[1fr_23rem] lg:items-start">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-verde-500">
+              {produto.marca}
+            </p>
+            <h1 className="mt-1.5 font-corpo text-2xl font-bold normal-case leading-tight tracking-normal text-verde-950 sm:text-3xl">
+              {produto.nome}
+            </h1>
+            <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-verde-800/55">
+              <span className="rounded-full bg-verde-50 px-2.5 py-1 font-semibold text-verde-700">
+                Novo
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Truck size={13} aria-hidden />
+                {ENTREGA[log.modalidade]}
+              </span>
             </p>
 
-            <h2 className="mt-7 text-xl text-verde-900">Especificações</h2>
-            <dl className="mt-3 divide-y divide-areia-200 border-t border-areia-200 text-sm">
-              {produto.especificacoes.map((e) => (
-                <div key={e.rotulo} className="flex justify-between gap-6 py-2.5">
-                  <dt className="text-verde-800/60">{e.rotulo}</dt>
-                  <dd className="text-right font-medium text-verde-950">{e.valor}</dd>
-                </div>
-              ))}
-            </dl>
+            <div className="mt-5">
+              <GaleriaProduto imagens={imagens} nome={produto.nome} />
+            </div>
           </div>
-        </div>
 
-        <div>
-          <p className="text-xs font-bold uppercase tracking-wider text-verde-500">
-            {produto.marca}
-          </p>
-          <h1 className="mt-2 font-corpo text-2xl font-bold normal-case leading-tight tracking-normal text-verde-950 sm:text-3xl">
-            {produto.nome}
-          </h1>
-
-          <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-verde-50 px-3 py-1 text-xs font-semibold text-verde-700">
-            <PackageCheck size={14} aria-hidden />
-            {produto.emEstoque ? "Disponível em estoque" : "Sob encomenda — consulte prazo"}
-          </p>
-
-          <div className="mt-6">
+          <div className="lg:sticky lg:top-44">
             <CompraProduto produto={produto} />
           </div>
+        </div>
+      </div>
 
-          <ul className="mt-5 space-y-3 text-sm text-verde-800/70">
-            <li className="flex gap-2.5">
-              <Truck size={17} className="mt-0.5 shrink-0 text-verde-500" aria-hidden />
-              Entrega na região ou retirada na loja no mesmo dia.
-            </li>
-            <li className="flex gap-2.5">
-              <ShieldCheck
-                size={17}
-                className="mt-0.5 shrink-0 text-verde-500"
-                aria-hidden
-              />
-              Produto original, com nota fiscal e garantia do fabricante.
-            </li>
-          </ul>
+      {/* Ficha técnica e descrição */}
+      <div className="mx-auto max-w-7xl px-4 pb-6">
+        <div className="grid gap-8 lg:grid-cols-[1fr_23rem] lg:items-start">
+          <div className="space-y-6">
+            <section className="rounded-2xl border border-verde-800/8 bg-white p-6">
+              <h2 className="text-xl text-verde-900">Características do produto</h2>
+              <dl className="mt-4 overflow-hidden rounded-lg border border-areia-200">
+                {ficha.map((linha, i) => (
+                  <div
+                    key={linha.rotulo}
+                    className={
+                      i % 2 === 0
+                        ? "grid grid-cols-[minmax(9rem,14rem)_1fr] gap-4 bg-areia-50 px-4 py-2.5"
+                        : "grid grid-cols-[minmax(9rem,14rem)_1fr] gap-4 px-4 py-2.5"
+                    }
+                  >
+                    <dt className="text-sm text-verde-800/60">{linha.rotulo}</dt>
+                    <dd className="text-sm font-medium text-verde-950">{linha.valor}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+
+            <section className="rounded-2xl border border-verde-800/8 bg-white p-6">
+              <h2 className="text-xl text-verde-900">Descrição</h2>
+              <p className="mt-3 text-sm leading-relaxed text-verde-800/75">
+                {produto.descricao}
+              </p>
+
+              {log.observacao && (
+                <p className="mt-4 rounded-lg bg-areia-100 px-4 py-3 text-sm text-verde-800/80">
+                  <strong className="font-semibold text-verde-950">Sobre a entrega:</strong>{" "}
+                  {log.observacao}
+                </p>
+              )}
+
+              <h3 className="mt-6 text-base text-verde-900">Como você recebe</h3>
+              <ul className="mt-2 space-y-1.5 text-sm text-verde-800/75">
+                <li>
+                  • Retirada na loja em {LOJA.endereco.cidade}/{LOJA.endereco.uf}, sem custo.
+                </li>
+                {log.modalidade === "correios" && (
+                  <li>• Envio pelos Correios para todo o Brasil, com código de rastreio.</li>
+                )}
+                {log.modalidade === "transportadora" && (
+                  <li>
+                    • Entrega por transportadora: pelo peso e tamanho, o frete é fechado por
+                    orçamento no WhatsApp.
+                  </li>
+                )}
+                {log.modalidade === "retirada" && (
+                  <li>
+                    • Este item não pode ser transportado por encomenda e sai apenas na loja.
+                  </li>
+                )}
+                <li>
+                  • Frete grátis acima de R$ {LOJA.freteGratisAcima} em{" "}
+                  {LOJA.endereco.cidade} e região.
+                </li>
+              </ul>
+            </section>
+          </div>
         </div>
       </div>
 

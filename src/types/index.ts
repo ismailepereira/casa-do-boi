@@ -46,6 +46,8 @@ export type Produto = {
   /** Preço "de", riscado. Ausente = sem desconto. */
   precoDe?: number;
   imagem: string;
+  /** Fotos adicionais para a galeria. A `imagem` é sempre a primeira. */
+  imagens?: string[];
   descricao: string;
   especificacoes: { rotulo: string; valor: string }[];
   /** Unidade de venda exibida no card: un, saco 30kg, litro… */
@@ -60,4 +62,22 @@ export type Produto = {
 export type ItemCarrinho = {
   produto: Produto;
   quantidade: number;
+};
+
+/** Uma opção de envio devolvida pela cotação. */
+export type OpcaoFrete = {
+  id: string;
+  transportadora: string;
+  servico: string;
+  precoBRL: number;
+  prazoDias: number;
+  /** true quando o valor é estimado, não veio da transportadora. */
+  simulado: boolean;
+};
+
+export type ResultadoFrete = {
+  opcoes: OpcaoFrete[];
+  simulado: boolean;
+  /** Itens do pedido que não podem ser postados. */
+  foraDoCorreios: { nome: string; motivo: string }[];
 };
