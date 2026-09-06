@@ -113,7 +113,12 @@ export async function POST(requisicao: Request) {
     });
   }
 
-  const subtotal = itens.reduce((s, i) => s + i.precoUnitario * i.quantidade, 0);
+  /** Centavos fecham em 2 casas: soma de ponto flutuante gera resto. */
+  const emReais = (v: number) => Math.round(v * 100) / 100;
+
+  const subtotal = emReais(
+    itens.reduce((s, i) => s + i.precoUnitario * i.quantidade, 0),
+  );
 
   // ── Frete: recalculado no servidor ─────────────────────────────────
   let entrega: PedidoRecebido["entrega"];
@@ -139,7 +144,17 @@ export async function POST(requisicao: Request) {
 
   // ── Pedido ─────────────────────────────────────────────────────────
   const agora = new Date();
-  const dia = agora.toISOString().slice(2, 10).replace(/-/g, "");
+  // Data no fuso da loja: em Anapu ainda e dia 5 quando o UTC ja virou dia 6.
+  const dia = new Intl.DateTimeFormat("pt-BR", {
+    timeZone: "America/Belem",
+    year: "2-digit",
+    month: "2-digit",
+    day: "2-digit",
+  })
+    .format(agora)
+    .split("/")
+    .reverse()
+    .join("");
   const sufixo = Math.random().toString(36).slice(2, 6).toUpperCase();
 
   const pedido: PedidoRecebido = {
@@ -149,7 +164,7 @@ export async function POST(requisicao: Request) {
     itens,
     entrega,
     subtotal,
-    total: subtotal + entrega.valor,
+    total: emReais(subtotal + entrega.valor),
     observacao: limparTexto(corpo.observacao, 500) || undefined,
   };
 
