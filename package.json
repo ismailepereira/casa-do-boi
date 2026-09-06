@@ -9,8 +9,7 @@
     "build": "next build",
     "start": "next start -p 3210",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit",
-    "bling:teste": "node scripts/bling-teste.mjs"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "class-variance-authority": "0.7.1",

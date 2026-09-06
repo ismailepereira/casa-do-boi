@@ -141,8 +141,8 @@ export default function PaginaRastreio() {
           telefone {LOJA.whatsappExibicao}.
         </p>
         <p className="mt-3 text-sm text-verde-800/70">
-          Compras retiradas na loja e entregas por transportadora não têm código dos
-          Correios — nesses casos a loja avisa direto quando o pedido estiver pronto.
+          Itens retirados na loja não têm código dos Correios — nesses casos a loja avisa
+          direto quando o pedido estiver pronto para retirada.
         </p>
         <Link
           href="/"

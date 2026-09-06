@@ -31,8 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const ENTREGA = {
   correios: "Enviamos pelos Correios para todo o Brasil",
-  transportadora: "Entrega por transportadora — combinada por orçamento",
-  retirada: "Somente retirada na loja",
+  retirada: "Não enviamos pelos Correios — retirada na loja",
 } as const;
 
 export default async function PaginaProduto({ params }: Props) {
@@ -161,15 +160,10 @@ export default async function PaginaProduto({ params }: Props) {
                 {log.modalidade === "correios" && (
                   <li>• Envio pelos Correios para todo o Brasil, com código de rastreio.</li>
                 )}
-                {log.modalidade === "transportadora" && (
-                  <li>
-                    • Entrega por transportadora: pelo peso e tamanho, o frete é fechado por
-                    orçamento no WhatsApp.
-                  </li>
-                )}
                 {log.modalidade === "retirada" && (
                   <li>
-                    • Este item não pode ser transportado por encomenda e sai apenas na loja.
+                    • Pelo peso ou tamanho, este item não é aceito pelos Correios: a venda é
+                    para retirada na loja.
                   </li>
                 )}
                 <li>

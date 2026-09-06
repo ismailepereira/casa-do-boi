@@ -9,14 +9,15 @@ export type Categoria = {
   destaque?: boolean;
 };
 
-/** Como o item chega ao cliente. Define se entra na cotação de frete dos Correios. */
-export type ModalidadeEnvio =
-  /** Cabe nos limites dos Correios (30 kg, lado ≤ 100 cm, soma ≤ 200 cm). */
-  | "correios"
-  /** Excede os Correios ou o frete fica inviável: transportadora/entrega própria. */
-  | "transportadora"
-  /** Só retirada na loja (cadeia fria, produto controlado). */
-  | "retirada";
+/**
+ * Como o item chega ao cliente.
+ *
+ * A loja envia **somente pelos Correios**. O que não cabe nos limites deles
+ * (30 kg, lado ≤ 100 cm, soma ≤ 200 cm) ou não pode ser postado fica disponível
+ * apenas para retirada na loja — a entrega por transportadora é uma etapa
+ * contratada à parte.
+ */
+export type ModalidadeEnvio = "correios" | "retirada";
 
 /**
  * Dados de logística do produto — **do produto embalado, pronto para postar**.
@@ -76,8 +77,8 @@ export type OpcaoFrete = {
 };
 
 /**
- * Um bloco de entrega do pedido. Um mesmo carrinho pode gerar mais de um:
- * o que vai pelos Correios, o que vai de transportadora e o que só sai na loja.
+ * Um bloco de entrega do pedido. Um mesmo carrinho pode gerar dois: o que vai
+ * pelos Correios e o que sai apenas na retirada.
  */
 export type GrupoFrete = {
   chave: ModalidadeEnvio;

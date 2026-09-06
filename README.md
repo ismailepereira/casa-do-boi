@@ -13,9 +13,9 @@
 Loja online da agropecuária **Casa do Boi FOS**: máquinas e ferramentas STIHL, suplemento
 mineral e ração, linha veterinária, cerca e insumos, vestuário e selaria.
 
-O projeto está em **fase 1 (visual)**: todas as telas funcionam com catálogo mockado em
-`src/data/`. A fase 2 troca a origem dos dados por banco e liga o checkout — nenhuma tela
-precisa ser reescrita, porque tudo consome os tipos de `src/types/`.
+Todas as telas funcionam com um catálogo genérico em `src/data/`, que será substituído
+pelos produtos reais do cliente. A camada `src/services/catalogo.ts` isola a origem dos
+dados: trocar por banco ou ERP no futuro não encosta em nenhuma página.
 
 ## Stack
 
@@ -71,55 +71,24 @@ public/
 └── produtos/             Fotos (6 STIHL reais + placeholder)
 ```
 
-## Catálogo pelo Bling (ERP)
+## Entrega
 
-O site lê o catálogo do Bling quando há credenciais; sem elas, usa o catálogo local
-de demonstração em `src/data/produtos.ts`. Nenhuma página sabe qual dos dois está
-valendo — quem decide é `src/services/catalogo.ts`.
+O plano em etapas está em [`docs/PLANO-DE-ENTREGA.md`](./docs/PLANO-DE-ENTREGA.md).
 
-Com o Bling ligado, o mesmo cadastro abastece o site, o Mercado Livre e os demais
-marketplaces, emite a nota fiscal e gera a etiqueta.
+Tudo que depende do cliente — catálogo real, pesagem, contrato dos Correios, domínio —
+está em [`docs/O-QUE-PRECISO-DO-CLIENTE.md`](./docs/O-QUE-PRECISO-DO-CLIENTE.md).
 
-**Como obter as credenciais**
+A planilha de peso e dimensões para levar aos Correios é a
+[`docs/correios-produtos-medidas.xlsx`](./docs/correios-produtos-medidas.xlsx).
 
-1. No Bling: *Central de Extensões > Área do Integrador > Criar aplicativo*
-2. Marque os escopos de **Produtos** e **Pedidos de venda**
-3. Copie o `Client ID` e o `Client Secret` da aba "Informações do app"
-4. Autorize o app para gerar o `refresh_token` (vale **30 dias** — renove antes de expirar)
-5. Preencha no `.env.local`:
+## Entrega dos pedidos
 
-```
-BLING_CLIENT_ID=
-BLING_CLIENT_SECRET=
-BLING_REFRESH_TOKEN=
-```
+A loja envia **somente pelos Correios**. Produto que passa de 30 kg, de 100 cm em algum
+lado ou que exige refrigeração fica disponível **apenas para retirada na loja**, com o
+motivo explicado na página do produto.
 
-**Conferir a conexão antes de mexer no site**
-
-```bash
-npm run bling:teste
-```
-
-Mostra se o token está válido, lista os produtos, aponta quais estão **sem peso ou
-dimensão** (esses caem em orçamento, porque não dá para cotar frete) e imprime os nomes
-das categorias — que devem ser cadastrados no `DE_PARA_CATEGORIA` de
-`src/services/catalogo.ts`.
-
-**Diagnóstico em produção**
-
-`GET /api/catalogo` responde de onde veio o catálogo (`bling` ou `local`), quantos
-produtos e como estão divididos por modalidade de envio.
-
-Se o Bling ficar fora do ar, o site cai automaticamente no catálogo local em vez de
-quebrar.
-
-## Pendências antes de ir ao ar
-
-- [ ] Confirmar telefone, endereço, horário e CNPJ em `src/config/loja.ts`
-- [ ] Validar **todos** os preços e especificações de `src/data/produtos.ts` (hoje provisórios)
-- [ ] Substituir o placeholder pelas fotos reais dos demais produtos
-- [ ] Fase 2: banco (Prisma + Postgres), painel admin, checkout Mercado Pago
-- [ ] Fase 2: cálculo de frete por CEP
+Entrega por transportadora, pagamento online (Mercado Pago) e integração com marketplaces
+são etapas contratadas à parte — não fazem parte desta entrega.
 
 ## Segurança
 

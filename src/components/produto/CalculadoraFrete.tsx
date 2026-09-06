@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Loader2, MapPin, MessageCircle, Package, Store, Truck } from "lucide-react";
+import { Loader2, MapPin, Package, Store, Truck } from "lucide-react";
 import { LOJA } from "@/config/loja";
 import { precoBRL } from "@/lib/formato";
-import { linkWhatsApp } from "@/lib/whatsapp";
 import type { GrupoFrete, ResultadoFrete } from "@/types";
 
-const ICONE = { correios: Package, transportadora: Truck, retirada: Store } as const;
+const ICONE = { correios: Package, retirada: Store } as const;
 
 function formatarCep(valor: string) {
   const d = valor.replace(/\D/g, "").slice(0, 8);
@@ -35,10 +34,9 @@ function Grupo({ grupo, mostrarTitulo }: { grupo: GrupoFrete; mostrarTitulo: boo
             <li key={o.id} className="flex items-center justify-between gap-3 px-3 py-2.5">
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-verde-950">
-                  {o.transportadora} {grupo.chave === "correios" ? o.servico : ""}
+                  {o.transportadora} {o.servico}
                 </p>
                 <p className="text-xs text-verde-800/60">
-                  {grupo.chave === "transportadora" && `${o.servico} · `}
                   Chega em até {o.prazoDias} dias úteis
                 </p>
               </div>
@@ -157,23 +155,16 @@ export function CalculadoraFrete({
 
           {resultado.simulado && (
             <p className="rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-900">
-              <strong>Valor simulado.</strong> A tabela de frete ainda não foi confirmada
-              com a transportadora — este número serve só para testar a tela.
+              <strong>Valor simulado.</strong> A integração com os Correios ainda não foi
+              liberada — este número serve só para testar a tela.
             </p>
           )}
 
           {semPreco && (
-            <a
-              href={linkWhatsApp(
-                `Olá! Quero um orçamento de frete para o CEP ${cep} na ${LOJA.nome}.`,
-              )}
-              target="_blank"
-              rel="noopener"
-              className="flex h-10 items-center justify-center gap-2 rounded-lg bg-[#1faf53] text-sm font-semibold text-white transition-colors hover:bg-[#189544]"
-            >
-              <MessageCircle size={15} aria-hidden />
-              Pedir orçamento no WhatsApp
-            </a>
+            <p className="rounded-lg bg-verde-50 px-3 py-2.5 text-xs leading-relaxed text-verde-800">
+              Este pedido não tem envio pelos Correios. Você fecha a compra normalmente e
+              retira na loja, em {LOJA.endereco.cidade}/{LOJA.endereco.uf}.
+            </p>
           )}
 
           <p className="flex items-start gap-1.5 text-xs text-verde-800/55">

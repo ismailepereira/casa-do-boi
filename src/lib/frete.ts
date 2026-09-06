@@ -70,11 +70,10 @@ export function avaliarCorreios(l: Logistica): AvaliacaoCorreios {
   return { cabe: impedimentos.length === 0, impedimentos, alertas };
 }
 
-/** Divide o carrinho entre o que vai por Correios e o que precisa de transportadora. */
+/** Divide o carrinho entre o que os Correios postam e o que sai só na loja. */
 export function separarPorModalidade(produtos: Produto[]) {
   return {
     correios: produtos.filter((p) => p.logistica.modalidade === "correios"),
-    transportadora: produtos.filter((p) => p.logistica.modalidade === "transportadora"),
     retirada: produtos.filter((p) => p.logistica.modalidade === "retirada"),
   };
 }

@@ -12,7 +12,6 @@ export async function GET() {
     total: produtos.length,
     porModalidade: {
       correios: produtos.filter((p) => p.logistica.modalidade === "correios").length,
-      transportadora: produtos.filter((p) => p.logistica.modalidade === "transportadora").length,
       retirada: produtos.filter((p) => p.logistica.modalidade === "retirada").length,
     },
   });
