@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight } from "lucide-react";
+import { DadosDaTrilha } from "@/components/DadosEstruturados";
 import { CardProduto } from "@/components/produto/CardProduto";
 import { CATEGORIAS, categoriaPorSlug } from "@/data/categorias";
 import { produtosPorCategoria } from "@/services/catalogo";
@@ -16,7 +17,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const categoria = categoriaPorSlug(slug);
   if (!categoria) return {};
-  return { title: categoria.nome, description: categoria.descricao };
+  return {
+    title: categoria.nome,
+    description: categoria.descricao,
+    alternates: { canonical: `/categoria/${categoria.slug}` },
+  };
 }
 
 export default async function PaginaCategoria({ params }: Props) {
@@ -28,6 +33,13 @@ export default async function PaginaCategoria({ params }: Props) {
 
   return (
     <>
+      <DadosDaTrilha
+        itens={[
+          { nome: "Início", caminho: "/" },
+          { nome: categoria.nome, caminho: `/categoria/${categoria.slug}` },
+        ]}
+      />
+
       <div className="border-b border-verde-800/8 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-8">
           <nav aria-label="Você está aqui" className="flex items-center gap-1 text-xs text-verde-800/50">

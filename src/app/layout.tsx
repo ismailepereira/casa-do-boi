@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow_Condensed, Inter } from "next/font/google";
+import { DadosDaLoja } from "@/components/DadosEstruturados";
 import { DrawerCarrinho } from "@/components/carrinho/DrawerCarrinho";
 import { AvisoDemonstracao } from "@/components/layout/AvisoDemonstracao";
 import { Cabecalho } from "@/components/layout/Cabecalho";
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Pular para o conteúdo
         </a>
+        <DadosDaLoja />
         <AvisoDemonstracao />
         <Cabecalho />
         <main id="conteudo">{children}</main>

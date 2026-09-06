@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight, Truck } from "lucide-react";
+import { DadosDaTrilha, DadosDoProduto } from "@/components/DadosEstruturados";
 import { Vitrine } from "@/components/home/Vitrine";
 import { CompraProduto } from "@/components/produto/CompraProduto";
 import { GaleriaProduto } from "@/components/produto/GaleriaProduto";
@@ -25,6 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: produto.nome,
     description: produto.descricao,
+    alternates: { canonical: `/produto/${produto.slug}` },
     openGraph: { images: [{ url: produto.imagem }] },
   };
 }
@@ -64,6 +66,17 @@ export default async function PaginaProduto({ params }: Props) {
 
   return (
     <>
+      <DadosDoProduto produto={produto} />
+      <DadosDaTrilha
+        itens={[
+          { nome: "Início", caminho: "/" },
+          ...(categoria
+            ? [{ nome: categoria.nome, caminho: `/categoria/${categoria.slug}` }]
+            : []),
+          { nome: produto.nome, caminho: `/produto/${produto.slug}` },
+        ]}
+      />
+
       <div className="mx-auto max-w-7xl px-4 py-5">
         <nav
           aria-label="Você está aqui"
