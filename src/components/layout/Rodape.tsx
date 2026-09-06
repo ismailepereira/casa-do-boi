@@ -8,7 +8,7 @@ export function Rodape() {
   return (
     <footer className="mt-20 bg-verde-950 text-verde-100">
       <div className="textura-campo">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-2 lg:grid-cols-5">
           <div>
             <Image
               src="/logo.png"
@@ -55,14 +55,6 @@ export function Rodape() {
                   </Link>
                 </li>
               ))}
-              <li className="pt-2">
-                <Link
-                  href="/rastreio"
-                  className="font-semibold text-verde-300 transition-colors hover:text-verde-200"
-                >
-                  Acompanhar entrega
-                </Link>
-              </li>
             </ul>
           </nav>
 
@@ -99,6 +91,28 @@ export function Rodape() {
             </ul>
           </div>
 
+          <nav aria-label="Informações da loja">
+            <h3 className="text-lg text-white">Informações</h3>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              {[
+                { href: "/entrega", texto: "Prazos e entrega" },
+                { href: "/trocas-e-devolucoes", texto: "Trocas e devoluções" },
+                { href: "/politica-de-privacidade", texto: "Política de privacidade" },
+                { href: "/termos-de-uso", texto: "Termos de uso" },
+                { href: "/rastreio", texto: "Acompanhar entrega" },
+              ].map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="text-verde-100/70 transition-colors hover:text-verde-300"
+                  >
+                    {l.texto}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
           <div>
             <h3 className="text-lg text-white">Onde estamos</h3>
             <p className="mt-4 flex gap-2.5 text-sm text-verde-100/70">
@@ -116,8 +130,8 @@ export function Rodape() {
                 Formas de pagamento
               </p>
               <p className="mt-2 text-sm text-verde-100/70">
-                PIX com {Math.round(LOJA.descontoPix * 100)}% de desconto, cartão em até{" "}
-                {LOJA.parcelasMax}x sem juros, boleto e pedido no WhatsApp.
+                PIX com {Math.round(LOJA.descontoPix * 100)}% de desconto, cartão na loja e
+                dinheiro na retirada.
               </p>
             </div>
           </div>

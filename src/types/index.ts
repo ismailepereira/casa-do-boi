@@ -95,3 +95,52 @@ export type ResultadoFrete = {
   /** true quando algum valor exibido ainda é estimativa. */
   simulado: boolean;
 };
+
+// ── Pedido ───────────────────────────────────────────────────────────
+
+export type EnderecoEntrega = {
+  cep: string;
+  logradouro: string;
+  numero: string;
+  complemento?: string;
+  bairro: string;
+  cidade: string;
+  uf: string;
+};
+
+export type ClientePedido = {
+  nome: string;
+  /** CPF ou CNPJ, so digitos. Necessario para a nota fiscal. */
+  documento: string;
+  email: string;
+  telefone: string;
+  endereco: EnderecoEntrega;
+};
+
+export type ItemPedido = {
+  slug: string;
+  nome: string;
+  quantidade: number;
+  precoUnitario: number;
+};
+
+export type EntregaPedido = {
+  tipo: ModalidadeEnvio;
+  /** Nome do servico escolhido, quando houver (PAC, SEDEX). */
+  servico?: string;
+  valor: number;
+  prazoDias: number;
+};
+
+/** Pedido ja validado no servidor, pronto para virar e-mail. */
+export type PedidoRecebido = {
+  /** Numero visivel ao cliente, no formato CB-AAMMDD-XXXX. */
+  numero: string;
+  criadoEm: string;
+  cliente: ClientePedido;
+  itens: ItemPedido[];
+  entrega: EntregaPedido;
+  subtotal: number;
+  total: number;
+  observacao?: string;
+};

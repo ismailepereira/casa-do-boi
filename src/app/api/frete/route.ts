@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { produtoPorSlug } from "@/services/catalogo";
 import { cotarPedido } from "@/services/cotacao";
+import { ipDaRequisicao, verificarLimite } from "@/lib/limiteTaxa";
 
 /**
  * Cotação de frete. O token do Melhor Envio nunca sai daqui — quem tem o token
@@ -16,6 +17,16 @@ type Corpo = {
 };
 
 export async function POST(requisicao: Request) {
+  // Cotar frete chama servico externo: 20 consultas por minuto por IP bastam
+  // para uso normal e impedem que alguem estoure a cota da loja.
+  const limite = verificarLimite(`frete:${ipDaRequisicao(requisicao)}`, 20, 60);
+  if (!limite.permitido) {
+    return NextResponse.json(
+      { erro: "Muitas consultas seguidas. Tente de novo em instantes." },
+      { status: 429 },
+    );
+  }
+
   let corpo: Corpo;
   try {
     corpo = (await requisicao.json()) as Corpo;

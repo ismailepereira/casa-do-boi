@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { CreditCard, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
+import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import { Botao } from "@/components/ui/Botao";
 import { LOJA } from "@/config/loja";
 import { precoBRL } from "@/lib/formato";
-import { linkWhatsApp, mensagemPedido } from "@/lib/whatsapp";
 import { totalCarrinho, useCarrinho } from "@/stores/carrinho";
 
 export default function PaginaCarrinho() {
@@ -149,22 +148,14 @@ export default function PaginaCarrinho() {
             {precoBRL(totalPix)} no PIX
           </p>
 
-          <Botao tamanho="lg" largura="cheia" className="mt-6" disabled>
-            <CreditCard size={18} aria-hidden />
-            Pagar com Mercado Pago
-          </Botao>
-          <p className="mt-1.5 text-center text-[0.7rem] text-verde-800/45">
-            Checkout online entra na fase 2 do projeto.
+          <Link href="/checkout" className="mt-6 block">
+            <Botao tamanho="lg" largura="cheia">
+              Finalizar pedido
+            </Botao>
+          </Link>
+          <p className="mt-2 text-center text-[0.7rem] leading-relaxed text-verde-800/50">
+            Na próxima tela você informa a entrega e confirma o pedido.
           </p>
-
-          <a
-            href={linkWhatsApp(mensagemPedido(itens, total))}
-            target="_blank"
-            rel="noopener"
-            className="mt-4 flex h-12 w-full items-center justify-center rounded-lg bg-[#1faf53] font-semibold text-white transition-colors hover:bg-[#189544]"
-          >
-            Enviar pedido pelo WhatsApp
-          </a>
 
           <Link
             href="/"

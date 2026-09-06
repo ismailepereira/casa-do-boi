@@ -8,7 +8,6 @@ import { Botao } from "@/components/ui/Botao";
 import { LOJA } from "@/config/loja";
 import { cn } from "@/lib/cn";
 import { precoBRL } from "@/lib/formato";
-import { linkWhatsApp, mensagemPedido } from "@/lib/whatsapp";
 import { totalCarrinho, useCarrinho } from "@/stores/carrinho";
 
 export function DrawerCarrinho() {
@@ -160,19 +159,18 @@ export function DrawerCarrinho() {
                 {precoBRL(total * (1 - LOJA.descontoPix))} no PIX
               </p>
 
-              <Link href="/carrinho" onClick={fechar} className="mt-4 block">
+              <Link href="/checkout" onClick={fechar} className="mt-4 block">
                 <Botao largura="cheia" tamanho="lg">
                   Finalizar pedido
                 </Botao>
               </Link>
-              <a
-                href={linkWhatsApp(mensagemPedido(itens, total))}
-                target="_blank"
-                rel="noopener"
-                className="mt-2 flex h-11 w-full items-center justify-center rounded-lg border-2 border-[#1faf53] text-sm font-semibold text-[#178a42] transition-colors hover:bg-[#1faf53] hover:text-white"
+              <Link
+                href="/carrinho"
+                onClick={fechar}
+                className="mt-2 flex h-11 w-full items-center justify-center rounded-lg border-2 border-verde-800 text-sm font-semibold text-verde-800 transition-colors hover:bg-verde-800 hover:text-white"
               >
-                Fechar pelo WhatsApp
-              </a>
+                Ver o carrinho
+              </Link>
             </footer>
           </>
         )}
