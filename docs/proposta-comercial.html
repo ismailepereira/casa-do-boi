@@ -1,0 +1,726 @@
+<title>Proposta Casa do Boi FOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Karla:wght@400;500;600;700&display=swap">
+
+<style>
+  :root {
+    --papel: #f7f6f0;
+    --papel-fundo: #eeece2;
+    --tinta: #16211b;
+    --tinta-fraca: #55635a;
+    --verde-fundo: #013d1f;
+    --verde-escuro: #025c30;
+    --verde-marca: #24bd0c;
+    --terra: #9c5a22;
+    --linha: #d7d3c5;
+    --realce: #ffffff;
+
+    --display: "Zilla Slab", Georgia, serif;
+    --corpo: "Karla", "Segoe UI", system-ui, sans-serif;
+  }
+
+  /* Escuro pelo sistema, quando o leitor nao escolheu explicitamente claro. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --papel: #101711;
+      --papel-fundo: #17211b;
+      --tinta: #e8e9e0;
+      --tinta-fraca: #9aa79d;
+      --verde-fundo: #02301a;
+      --verde-escuro: #37c96a;
+      --verde-marca: #4ee02f;
+      --terra: #d08a4a;
+      --linha: #2b3a31;
+      --realce: #ffffff;
+    }
+  }
+
+  /* Escuro escolhido no botao: vence tambem sobre um sistema claro. */
+  :root[data-theme="dark"] {
+    --papel: #101711;
+    --papel-fundo: #17211b;
+    --tinta: #e8e9e0;
+    --tinta-fraca: #9aa79d;
+    --verde-fundo: #02301a;
+    --verde-escuro: #37c96a;
+    --verde-marca: #4ee02f;
+    --terra: #d08a4a;
+    --linha: #2b3a31;
+    --realce: #ffffff;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: var(--corpo);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    line-height: 1.12;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .faixa { padding: 0 1.5rem; }
+  .interno { max-width: 62rem; margin: 0 auto; }
+  .prosa { max-width: 44rem; }
+
+  /* ── Abertura ───────────────────────────────────────────── */
+  .abertura {
+    background: var(--verde-fundo);
+    color: #eaf3ec;
+    padding: 3.5rem 1.5rem 3rem;
+    background-image: repeating-linear-gradient(
+      135deg, rgba(255,255,255,.045) 0 2px, transparent 2px 14px);
+  }
+  .etiqueta {
+    font-size: .72rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--verde-marca);
+  }
+  .abertura h1 {
+    font-size: clamp(2.4rem, 6vw, 3.8rem);
+    margin: .7rem 0 0;
+    color: var(--realce);
+  }
+  .abertura p {
+    margin: 1rem 0 0;
+    max-width: 34rem;
+    color: #c3d8c8;
+    font-size: 1.05rem;
+  }
+  .provaViva {
+    display: inline-flex;
+    align-items: baseline;
+    gap: .7rem;
+    margin-top: 1.8rem;
+    padding: .8rem 1.2rem;
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: .3rem;
+    background: rgba(255,255,255,.06);
+  }
+  .provaViva span {
+    font-size: .72rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--verde-marca);
+    font-weight: 600;
+  }
+  .provaViva a {
+    color: var(--realce);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 2px solid var(--verde-marca);
+  }
+  .provaViva a:hover { color: var(--verde-marca); }
+
+  /* ── Seções ─────────────────────────────────────────────── */
+  section { padding: 3.2rem 1.5rem; }
+  section + section { border-top: 1px solid var(--linha); }
+
+  .tituloSecao {
+    font-size: clamp(1.6rem, 3.4vw, 2.1rem);
+    margin-bottom: .4rem;
+  }
+  .subtituloSecao {
+    color: var(--tinta-fraca);
+    margin: 0 0 2rem;
+    max-width: 42rem;
+  }
+
+  /* Blocos de entrega: lista com regra, não card */
+  .entregas {
+    display: grid;
+    gap: 2rem 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+  .entrega h3 {
+    font-size: 1.1rem;
+    padding-bottom: .5rem;
+    border-bottom: 2px solid var(--verde-marca);
+    margin-bottom: .8rem;
+  }
+  .entrega ul { margin: 0; padding: 0; list-style: none; }
+  .entrega li {
+    position: relative;
+    padding-left: 1.1rem;
+    margin-bottom: .5rem;
+    font-size: .94rem;
+    color: var(--tinta-fraca);
+  }
+  .entrega li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: .62em;
+    width: .38rem; height: .38rem;
+    background: var(--verde-escuro);
+    border-radius: 50%;
+  }
+  .entrega strong { color: var(--tinta); font-weight: 600; }
+
+  /* Faixa de dados do frete */
+  .dados {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    gap: 1px;
+    background: var(--linha);
+    border: 1px solid var(--linha);
+    margin-top: 1.6rem;
+  }
+  .dado { background: var(--papel); padding: 1.1rem 1.2rem; }
+  .dado b {
+    display: block;
+    font-family: var(--display);
+    font-size: 1.9rem;
+    line-height: 1;
+    color: var(--verde-escuro);
+    font-variant-numeric: tabular-nums;
+  }
+  .dado span {
+    display: block;
+    margin-top: .35rem;
+    font-size: .78rem;
+    color: var(--tinta-fraca);
+    line-height: 1.35;
+  }
+
+  /* ── Investimento ───────────────────────────────────────── */
+  .planos {
+    display: grid;
+    gap: 1.4rem;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    align-items: start;
+  }
+  .plano {
+    border: 1px solid var(--linha);
+    background: var(--papel-fundo);
+    padding: 1.8rem;
+    border-radius: .35rem;
+  }
+  .plano.destaque {
+    border: 2px solid var(--verde-escuro);
+    background: var(--papel);
+    box-shadow: 0 10px 30px -18px rgba(1,61,31,.55);
+  }
+  .selo {
+    display: inline-block;
+    font-size: .68rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--papel);
+    background: var(--verde-escuro);
+    padding: .3rem .6rem;
+    border-radius: .2rem;
+    margin-bottom: .9rem;
+  }
+  .plano h3 { font-size: 1.35rem; }
+  .plano .paraQuem {
+    color: var(--tinta-fraca);
+    font-size: .9rem;
+    margin: .4rem 0 1.2rem;
+    min-height: 2.6em;
+  }
+  .valor {
+    font-family: var(--display);
+    font-size: 2.6rem;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .mensal {
+    font-size: .95rem;
+    color: var(--tinta-fraca);
+    margin: .45rem 0 1.3rem;
+  }
+  .mensal b { color: var(--tinta); font-weight: 700; }
+  .plano ul {
+    margin: 0; padding: 0; list-style: none;
+    border-top: 1px solid var(--linha);
+    padding-top: 1rem;
+  }
+  .plano li {
+    font-size: .9rem;
+    padding: .35rem 0 .35rem 1.4rem;
+    position: relative;
+    color: var(--tinta-fraca);
+  }
+  .plano li::before {
+    content: "✓";
+    position: absolute; left: 0;
+    color: var(--verde-escuro);
+    font-weight: 700;
+  }
+  .plano li.fora { color: var(--tinta-fraca); opacity: .62; }
+  .plano li.fora::before { content: "—"; color: var(--terra); }
+
+  /* Tabelas */
+  .rolagem { overflow-x: auto; margin-top: 1.4rem; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .92rem;
+  }
+  caption {
+    text-align: left;
+    font-size: .78rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--tinta-fraca);
+    padding-bottom: .6rem;
+    font-weight: 600;
+  }
+  th {
+    text-align: left;
+    font-weight: 600;
+    font-size: .78rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--tinta-fraca);
+    border-bottom: 2px solid var(--linha);
+    padding: .5rem .8rem .5rem 0;
+  }
+  td {
+    padding: .65rem .8rem .65rem 0;
+    border-bottom: 1px solid var(--linha);
+    font-variant-numeric: tabular-nums;
+  }
+  td:last-child, th:last-child { text-align: right; padding-right: 0; }
+  .destacado { font-weight: 700; color: var(--verde-escuro); }
+
+  /* Passos — sequência real, por isso numerada */
+  .passos { margin: 0; padding: 0; list-style: none; counter-reset: passo; }
+  .passo {
+    display: grid;
+    grid-template-columns: 2.6rem 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--linha);
+    align-items: start;
+  }
+  .passo::before {
+    counter-increment: passo;
+    content: counter(passo, decimal-leading-zero);
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--verde-marca);
+    font-variant-numeric: tabular-nums;
+  }
+  .passo h3 { font-size: 1rem; margin-bottom: .2rem; }
+  .passo p { margin: 0; font-size: .9rem; color: var(--tinta-fraca); }
+  .quem {
+    display: inline-block;
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    font-weight: 700;
+    padding: .15rem .45rem;
+    border-radius: .18rem;
+    margin-left: .5rem;
+    vertical-align: .1em;
+  }
+  .quem.cliente { background: rgba(156,90,34,.14); color: var(--terra); }
+  .quem.nos { background: rgba(2,92,48,.13); color: var(--verde-escuro); }
+
+  /* Fechamento */
+  .fechamento {
+    background: var(--verde-fundo);
+    color: #eaf3ec;
+    padding: 3rem 1.5rem;
+    background-image: repeating-linear-gradient(
+      135deg, rgba(255,255,255,.045) 0 2px, transparent 2px 14px);
+  }
+  .fechamento h2 { color: var(--realce); font-size: 1.8rem; }
+  .fechamento p { color: #c3d8c8; max-width: 40rem; }
+  .assinatura {
+    margin-top: 2.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(255,255,255,.18);
+    font-size: .85rem;
+    color: #9dbaa4;
+  }
+  .assinatura a { color: var(--verde-marca); text-decoration: none; }
+
+  .nota {
+    font-size: .82rem;
+    color: var(--tinta-fraca);
+    border-left: 2px solid var(--terra);
+    padding-left: .9rem;
+    margin-top: 1.6rem;
+  }
+
+  a:focus-visible, .provaViva a:focus-visible {
+    outline: 2px solid var(--verde-marca);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  @page { size: A4; margin: 0; }
+
+  @media print {
+    /* O PDF e enviado e lido na tela: as cores da marca ficam. */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    :root { --papel: #ffffff; --papel-fundo: #f2f0e8; }
+
+    body { font-size: 9.8pt; line-height: 1.5; }
+    .interno { max-width: none; }
+
+    .abertura { padding: 15mm 14mm 12mm; }
+    section { padding: 9mm 14mm; }
+    .fechamento { padding: 11mm 14mm 13mm; }
+
+    .abertura h1 { font-size: 25pt; }
+    .abertura p { font-size: 10.5pt; }
+    .tituloSecao { font-size: 14.5pt; }
+    .subtituloSecao { margin-bottom: 6mm; }
+    .valor { font-size: 21pt; }
+    .dado b { font-size: 15pt; }
+    .entregas { gap: 6mm 10mm; }
+
+    /* Quebra so no que e pequeno: secao inteira travada estoura o PDF. */
+    .plano, .dado, .passo, .entrega, tr { break-inside: avoid; }
+    .entregas { break-inside: auto; }
+    .planos, .dados { break-inside: avoid; }
+    h2, h3 { break-after: avoid; }
+    .abertura, .fechamento { break-inside: avoid; }
+    .paginaNova { break-before: page; }
+  }
+
+</style>
+
+<header class="abertura">
+  <div class="interno">
+    <p class="etiqueta">Proposta de implantação · Setembro de 2026</p>
+    <h1>Loja online da Casa do&nbsp;Boi&nbsp;FOS</h1>
+    <p>
+      Vender ração, suplemento e insumo para todo o Brasil, com frete calculado
+      na hora e pedido chegando organizado na loja — saindo de Anapu.
+    </p>
+
+    <div class="provaViva">
+      <span>Já funcionando</span>
+      <a href="https://casa-do-boi.vercel.app" target="_blank" rel="noopener">casa-do-boi.vercel.app</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="interno">
+    <h2 class="tituloSecao">Isto não é uma promessa. Está no ar.</h2>
+    <p class="subtituloSecao prosa">
+      A loja já pode ser aberta do celular agora e navegada por inteiro. O que falta
+      é substituir os produtos de exemplo pelos seus e ligar o frete real dos Correios.
+    </p>
+
+    <div class="entregas">
+      <div class="entrega">
+        <h3>A loja</h3>
+        <ul>
+          <li>Catálogo com departamentos, busca e <strong>carrinho que não se perde</strong> se o cliente fechar o navegador</li>
+          <li>Página de produto no padrão dos grandes: galeria, preço, parcelamento e ficha técnica</li>
+          <li>Funciona no celular, que é de onde vem a maior parte das vendas</li>
+        </ul>
+      </div>
+
+      <div class="entrega">
+        <h3>O frete</h3>
+        <ul>
+          <li>O cliente digita o CEP e vê <strong>preço e prazo antes de comprar</strong></li>
+          <li>Peso e medida de cada produto já cadastrados, com o cálculo de cubagem dos Correios</li>
+          <li>O que os Correios não aceitam é bloqueado sozinho</li>
+        </ul>
+      </div>
+
+      <div class="entrega">
+        <h3>A venda</h3>
+        <ul>
+          <li>Pedido com número na tela, para o cliente guardar</li>
+          <li><strong>E-mail chega na loja</strong> com itens, valores, endereço e o CPF para a nota</li>
+          <li>Confirmação automática para o cliente, com a forma de pagamento</li>
+          <li>Página para acompanhar a entrega pelo código dos Correios</li>
+        </ul>
+      </div>
+
+      <div class="entrega">
+        <h3>A proteção do seu dinheiro</h3>
+        <ul>
+          <li><strong>O preço vem sempre do servidor.</strong> Tentamos comprar uma motosserra de R$ 2.199 por R$ 1 alterando o navegador: o sistema ignorou e cobrou o valor certo</li>
+          <li>CPF e CNPJ conferidos com dígito verificador, para não emitir nota errada</li>
+          <li>Limite de tentativas, para robô não gerar pedido falso em massa</li>
+          <li>Site em HTTPS, sem guardar senha nem dado de cartão</li>
+        </ul>
+      </div>
+
+      <div class="entrega">
+        <h3>O que a lei exige</h3>
+        <ul>
+          <li>Razão social, CNPJ e endereço em destaque, como manda o Decreto 7.962/2013</li>
+          <li>Política de privacidade conforme a LGPD</li>
+          <li>Termos de uso e política de trocas, com os 7 dias de arrependimento</li>
+          <li>Página de prazos e formas de entrega</li>
+        </ul>
+      </div>
+
+      <div class="entrega">
+        <h3>Ser achado no Google</h3>
+        <ul>
+          <li>Cada produto vira uma página que o Google entende, com <strong>preço e disponibilidade no resultado da busca</strong></li>
+          <li>Mapa do site e endereços organizados para busca</li>
+          <li>Link com foto e descrição ao compartilhar no WhatsApp</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="interno">
+    <h2 class="tituloSecao">O frete foi o trabalho mais pesado</h2>
+    <p class="subtituloSecao prosa">
+      Loja de agropecuária tem um problema que loja de roupa não tem: metade do que
+      se vende é pesada demais para os Correios. Pesamos e medimos o catálogo inteiro
+      e o site decide sozinho o que pode ser postado.
+    </p>
+
+    <div class="dados">
+      <div class="dado">
+        <b>17</b>
+        <span>produtos vão pelos Correios</span>
+      </div>
+      <div class="dado">
+        <b>12</b>
+        <span>ficam para retirada na loja, com o motivo explicado</span>
+      </div>
+      <div class="dado">
+        <b>30 kg</b>
+        <span>peso máximo que os Correios aceitam</span>
+      </div>
+      <div class="dado">
+        <b>100 cm</b>
+        <span>lado máximo da caixa</span>
+      </div>
+    </div>
+
+    <p class="nota">
+      É por isso que saco de ração de 40 kg, rolo de arame e adubo aparecem como
+      “retirada na loja”. Ninguém compra achando que vai receber em casa — e você
+      não fica com a conta de um frete que não deveria ter aceitado.
+    </p>
+  </div>
+</section>
+
+<section class="paginaNova">
+  <div class="interno">
+    <h2 class="tituloSecao">Investimento</h2>
+    <p class="subtituloSecao prosa">
+      Duas formas de começar. A diferença entre elas é uma só: quem confere se o
+      pagamento entrou.
+    </p>
+
+    <div class="planos">
+      <div class="plano destaque">
+        <span class="selo">Recomendada</span>
+        <h3>Loja completa</h3>
+        <p class="paraQuem">Para vender sem depender de alguém olhando o extrato do banco.</p>
+        <p class="valor">R$ 5.000</p>
+        <p class="mensal">+ <b>R$ 500</b> por mês</p>
+        <ul>
+          <li>Tudo o que já está no ar</li>
+          <li>Frete real dos Correios ligado</li>
+          <li><strong>PIX com confirmação automática</strong> — o banco avisa o site quando o dinheiro cai</li>
+          <li>Pedido registrado com status: aguardando, pago, enviado</li>
+          <li>Página onde o cliente acompanha o próprio pedido</li>
+          <li>Domínio próprio configurado</li>
+        </ul>
+      </div>
+
+      <div class="plano">
+        <h3>Loja essencial</h3>
+        <p class="paraQuem">Para começar menor e ligar o pagamento automático depois.</p>
+        <p class="valor">R$ 3.000</p>
+        <p class="mensal">+ <b>R$ 350</b> por mês</p>
+        <ul>
+          <li>Tudo o que já está no ar</li>
+          <li>Frete real dos Correios ligado</li>
+          <li>Domínio próprio configurado</li>
+          <li class="fora">Pagamento conferido à mão, no app do banco</li>
+          <li class="fora">Sem registro de status do pedido</li>
+          <li class="fora">Sem página de acompanhamento do pedido</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="nota">
+      Na loja essencial, cada pedido exige alguém abrindo o aplicativo do banco para
+      conferir se o PIX entrou antes de despachar. Funciona com poucos pedidos por
+      semana; a partir daí, vira meio expediente — e comprovante falso é um risco real.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="interno">
+    <h2 class="tituloSecao">O que a mensalidade cobre</h2>
+    <p class="subtituloSecao prosa">
+      Não é aluguel de site. É a loja continuar funcionando, atualizada e com alguém
+      atrás dela.
+    </p>
+
+    <div class="entregas">
+      <div class="entrega">
+        <h3>Manter no ar</h3>
+        <ul>
+          <li>Hospedagem, domínio e certificado de segurança</li>
+          <li>Renovação das chaves de integração dos Correios</li>
+          <li>Monitoramento: se cair, eu sou avisado antes do seu cliente</li>
+        </ul>
+      </div>
+      <div class="entrega">
+        <h3>Manter atualizada</h3>
+        <ul>
+          <li>Cadastro e alteração de produtos, preços e fotos</li>
+          <li>Ajuste de prazos e regras de frete quando os Correios mudarem a tabela</li>
+          <li>Pequenas melhorias e correções</li>
+        </ul>
+      </div>
+      <div class="entrega">
+        <h3>Suporte</h3>
+        <ul>
+          <li>Atendimento direto quando algo não funcionar</li>
+          <li>Orientação de operação para quem cuida dos pedidos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="interno">
+    <h2 class="tituloSecao">Custos que ficam com você</h2>
+    <p class="subtituloSecao prosa">
+      Transparência agora evita surpresa depois. São valores pagos a terceiros, não a mim.
+    </p>
+
+    <div class="rolagem">
+      <table>
+        <caption>Custos de terceiros</caption>
+        <thead>
+          <tr><th scope="col">Item</th><th scope="col">Quanto</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Domínio <code>.com.br</code></td><td>cerca de R$ 40 por ano</td></tr>
+          <tr><td>Hospedagem do site</td><td class="destacado">grátis no início</td></tr>
+          <tr><td>Envio dos e-mails de pedido</td><td class="destacado">grátis até 3.000 por mês</td></tr>
+          <tr><td>Frete (Correios ou Melhor Envio)</td><td>sem mensalidade, paga por envio</td></tr>
+          <tr><td>Recebimento por PIX</td><td>cerca de 0,3% a 0,8% por venda</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="nota">
+      Comparação que vale a pena guardar: numa venda de R$ 2.199, o PIX custa cerca de
+      R$ 5. A mesma venda no cartão, por maquininha ou gateway, custaria perto de R$ 110.
+    </p>
+  </div>
+</section>
+
+<section class="paginaNova">
+  <div class="interno">
+    <h2 class="tituloSecao">O caminho até a loja vender</h2>
+    <p class="subtituloSecao prosa">
+      Esta é uma sequência de verdade: cada passo depende do anterior. Os dois primeiros
+      são seus, e são os que destravam todo o resto.
+    </p>
+
+    <ol class="passos">
+      <li class="passo">
+        <div>
+          <h3>Definir o catálogo real <span class="quem cliente">Você</span></h3>
+          <p>
+            Quais produtos entram na loja. O CNPJ está registrado como fabricação de
+            alimentos para animais — se a loja vender fora disso, precisamos acertar o
+            CNAE antes, ou a nota fiscal trava.
+          </p>
+        </div>
+      </li>
+      <li class="passo">
+        <div>
+          <h3>Pesar e medir os produtos <span class="quem cliente">Você</span></h3>
+          <p>
+            Entrego uma planilha pronta. Basta o peso do produto embalado e as medidas
+            da caixa fechada. Ela tem dois destinos: alimentar a loja e ser levada aos
+            Correios — é ela que define seu desconto no contrato.
+          </p>
+        </div>
+      </li>
+      <li class="passo">
+        <div>
+          <h3>Abrir o contrato de frete <span class="quem cliente">Você</span></h3>
+          <p>
+            Na agência de Anapu, na Av. Getúlio Vargas, 74. Ou pelo Melhor Envio, que é
+            grátis e começa no mesmo dia.
+          </p>
+        </div>
+      </li>
+      <li class="passo">
+        <div>
+          <h3>Enviar fotos e preços <span class="quem cliente">Você</span></h3>
+          <p>Uma foto por produto, com fundo claro. Foto de celular serve.</p>
+        </div>
+      </li>
+      <li class="passo">
+        <div>
+          <h3>Cadastrar tudo e ligar o frete real <span class="quem nos">Comigo</span></h3>
+          <p>Catálogo no ar com seus produtos, seus preços e o frete calculando de verdade.</p>
+        </div>
+      </li>
+      <li class="passo">
+        <div>
+          <h3>Publicar no seu domínio <span class="quem nos">Comigo</span></h3>
+          <p>
+            Loja no ar com nome próprio, liberada para o Google, e um pedido de teste
+            feito do começo ao fim antes de abrir para o público.
+          </p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<footer class="fechamento">
+  <div class="interno">
+    <h2>Prazo</h2>
+    <p>
+      Assim que a planilha de pesagem e as fotos chegarem, são <strong>até 15 dias</strong>
+      para a loja estar vendendo no seu domínio. O que define a data não é o
+      desenvolvimento — é a chegada dos seus dados.
+    </p>
+    <p>
+      Enquanto isso, a loja continua no ar para você acompanhar cada etapa, no mesmo
+      endereço.
+    </p>
+
+    <div class="assinatura">
+      Proposta válida por 30 dias · Desenvolvido por
+      <a href="https://ismailepereira.github.io/" target="_blank" rel="noopener">ismailepereira</a>
+    </div>
+  </div>
+</footer>
